@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_farzanamart_barang,access.farzanamart.barang,model_farzanamart_barang,,1,1,1,1
+access_farzanamart_kelompokbarang,access.farzanamart.kelompokbarang,model_farzanamart_kelompokbarang,,1,1,1,1
+access_farzanamart_person,access.farzanamart.person,model_farzanamart_person,,1,1,1,1
+access_farzanamart_kasir,access.farzanamart.kasir,model_farzanamart_kasir,,1,1,1,1
+access_farzanamart_cleaningservice,access.farzanamart.cleaningservice,model_farzanamart_cleaningservice,,1,1,1,1
+access_farzanamart_supplier,access.farzanamart.supplier,model_farzanamart_supplier,,1,1,1,1
+access_farzanamart_penjualan,access.farzanamart.penjualan,model_farzanamart_penjualan,,1,1,1,1
+access_farzanamart_detailpenjualan,access.farzanamart.detailpenjualan,model_farzanamart_detailpenjualan,,1,1,1,1

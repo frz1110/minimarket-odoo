@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- This Menu Item will appear in the Upper bar, that's why It needs NO parent or action -->
+    <menuitem
+        id="farzanamart_menu_root"
+        name="Farzana Mart"
+        sequence="10"/>
+
+    <!-- This Menu Item Must have a parent -->
+    <menuitem
+        id="farzanamart_barang_menu_categ"
+        name="Barang"
+        parent="farzanamart_menu_root"
+        sequence="10"/>
+
+    <menuitem
+        id="farzanamart_pegawai_menu_categ"
+        name="Pegawai"
+        parent="farzanamart_menu_root"
+        sequence="20"/>
+
+    <!-- This Menu Item Must have a parent -->
+    <menuitem 
+        id="farzanamart_transaksi_menu_categ" 
+        name="Transaksi" 
+        parent="farzanamart_menu_root" 
+        sequence="60"/>
+
+</odoo>
