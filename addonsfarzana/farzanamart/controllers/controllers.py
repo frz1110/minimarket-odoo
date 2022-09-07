@@ -19,3 +19,20 @@
 #         return http.request.render('farzanamart.object', {
 #             'object': obj
 #         })
+
+from odoo import http, models
+from odoo.http import request
+import json
+
+class Farzanamart(http.Controller):
+     @http.route('/farzanamart/get_barang', auth='public', method=['GET'])
+     def get_barang(self, **kw):
+         barang_data = request.env['farzanamart.barang'].search([])
+         isi = []
+         for barang in barang_data:
+            isi.append({
+                "Nama": barang.name,
+                "harga_jual":barang.harga_jual,
+                "stok":barang.stok,
+            })
+         return json.dumps(isi)

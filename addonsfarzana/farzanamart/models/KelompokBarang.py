@@ -32,7 +32,7 @@ class KelompokBarang(models.Model):
         for record in self:
             daftar_barang = self.env['farzanamart.barang'].search([('kelompokbarang_id', '=', record.id)]).mapped('name')
             record.jml_item = len(daftar_barang)
-            record.daftar = daftar_barang
+            record.daftar = ",".join(daftar_barang)
     
     
 

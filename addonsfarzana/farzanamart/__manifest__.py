@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'report_xlsx'],
 
     # always loaded
     'data': [
@@ -36,6 +36,8 @@
         'views/supplier_view.xml',
         'views/direksi_view.xml',
         'views/penjualan_view.xml',
+        'report/report.xml',
+        'wizzard/barangdatang_wizzard_view.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

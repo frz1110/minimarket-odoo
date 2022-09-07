@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="supplier_report" model="ir.actions.report">
+        <field name="name">Supplier Excel</field>
+        <field name="model">farzanamart.supplier</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">farzanamart.supplier_report</field>
+        <field name="report_file">farzanamart.supplier_report</field>
+        <field name="binding_model_id" ref="model_farzanamart_supplier"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="barang_report" model="ir.actions.report">
+        <field name="name">Barang Excel</field>
+        <field name="model">farzanamart.barang</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">farzanamart.barang_report</field>
+        <field name="report_file">farzanamart.barang_report</field>
+        <field name="binding_model_id" ref="model_farzanamart_barang"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

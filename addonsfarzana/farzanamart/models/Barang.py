@@ -14,3 +14,4 @@ class Barang(models.Model):
      kelompokbarang_id = fields.Many2one(comodel_name='farzanamart.kelompokbarang', string='Kelompok Barang', ondelete='cascade')
      supplier_id = fields.Many2many(comodel_name='farzanamart.supplier', string='Supplier')
      
+     

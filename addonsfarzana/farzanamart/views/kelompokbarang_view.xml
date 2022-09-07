@@ -11,7 +11,8 @@
                 <field name="name"/>
                 <field name="kode_kelompok"/>
                 <field name="kode_rak"/>
-                <field name="daftar"/>
+                <field name="daftar" />
+                <field name="barang_id" widget="many2many_tags"/>
                 <field name="jml_item"/>
             </tree>
         </field>

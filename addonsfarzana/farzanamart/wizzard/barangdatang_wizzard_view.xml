@@ -1,0 +1,31 @@
+<odoo>
+<!-- model.name form view -->
+<record id="barang_datang_wizzard_view_form" model="ir.ui.view">
+    <field name="name">Kedatangan Barang</field>
+    <field name="model">farzanamart.barangdatang</field>
+    <field name="arch" type="xml">
+        <form string="Form Kedatangan barang">
+            <sheet>
+                <group>
+                    <field name="barang_id"/>
+                    <field name="jumlah"/>
+                    
+                </group>
+                <footer>
+                <button name="button_barang_datang" type="object" string="Input Barang"/>
+                <button  string="Cancel" special='cancel'/>
+                </footer>
+            </sheet>
+        </form>
+    </field>
+</record>
+<!-- model.name action window -->
+<record id="barangdatang_wizzard_action" model="ir.actions.act_window">
+    <field name="name">Kedatangan  Barang</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">farzanamart.barangdatang</field>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref=""/>
+    <field name="target">new</field> 
+</record>
+</odoo>

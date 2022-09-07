@@ -13,7 +13,7 @@
                 <field name="harga_jual" />
                 <field name="stok" />
                 <field name="kelompokbarang_id" />
-                <field name="supplier_id" />
+                <field name="supplier_id" widget="many2many_tags"/>
             </tree>
         </field>
     </record>
@@ -24,6 +24,9 @@
         <field name="model">farzanamart.barang</field>
         <field name="arch" type="xml">
             <form string="Barang">
+               <header>
+                    <button name="%(farzanamart.barangdatang_wizzard_action)d" type="action" string="Input Barang"/>
+               </header>
                 <sheet>
                     <group name="Barang" string="Barang">
                         <!-- Add your fields here -->

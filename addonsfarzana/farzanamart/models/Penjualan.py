@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 class Penjualan(models.Model):
     _name="farzanamart.penjualan"
@@ -24,6 +25,24 @@ class Penjualan(models.Model):
                 [('penjualan_id', '=', line.id)]).mapped('subtotal'))
             line.total_bayar = result
 
+    def unlink(self):
+        if self.detailpenjualan_ids:
+            penjualan = []
+            for line in self:
+                penjualan = self.env['farzanamart.detailpenjualan'].search(
+                    [('penjualan_id', '=', line.id)])
+                print(penjualan)
+
+            for ob in penjualan:
+                print(ob.barang_id.name + ' ' + str(ob.qty))
+                ob.barang_id.stok += ob.qty
+        return super(Penjualan, self).unlink()
+
+    # _sql_constraints = [
+    #     ('No Nota unik', 'unique(name)','No Nota harus unik')
+    # ]
+
+    
 
 class DetailPenjualan(models.Model):
     _name="farzanamart.detailpenjualan"
@@ -57,3 +76,20 @@ class DetailPenjualan(models.Model):
         if record.qty:
             self.env['farzanamart.barang'].search([('id','=',record.barang_id.id)]).write({'stok':record.barang_id.stok-record.qty})
         return record
+
+    def write(self, vals):
+        for record in self:
+            print('tes',record.qty)
+            qty_sebelum = self.qty
+            super(DetailPenjualan, self).write(vals)
+            self.env['farzanamart.barang'].search([('id','=',record.barang_id.id)]).write({'stok':record.barang_id.stok+(qty_sebelum-record.qty)})
+
+    @api.constrains('qty')
+    def check_quantity(self):
+        for rec in self:
+            if rec.qty<1:
+                raise ValidationError(f'Mau beli {rec.barang_id.name} berapa?')
+            elif rec.barang_id.stok < rec.qty:
+                raise ValidationError(f'Stok {rec.barang_id.name} tidak cukup')
+
+  
