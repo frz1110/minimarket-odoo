@@ -78,11 +78,9 @@ class DetailPenjualan(models.Model):
         return record
 
     def write(self, vals):
-        for record in self:
-            print('tes',record.qty)
-            qty_sebelum = self.qty
-            super(DetailPenjualan, self).write(vals)
-            self.env['farzanamart.barang'].search([('id','=',record.barang_id.id)]).write({'stok':record.barang_id.stok+(qty_sebelum-record.qty)})
+        qty_sebelum = self.qty
+        super(DetailPenjualan, self).write(vals)
+        self.env['farzanamart.barang'].search([('id','=',self.barang_id.id)]).write({'stok':self.barang_id.stok+(qty_sebelum-self.qty)})
 
     @api.constrains('qty')
     def check_quantity(self):

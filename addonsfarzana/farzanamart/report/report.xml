@@ -1,5 +1,16 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
+
+    <record id="report_penjualan_pdf" model="ir.actions.report">
+        <field name="name">Penjualan Pdf</field>
+        <field name="model">farzanamart.penjualan</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">farzanamart.report_penjualan_pdf</field>
+        <field name="report_file">farzanamart.report_penjualan_pdf</field>
+        <field name="binding_model_id" ref="model_farzanamart_penjualan"/>
+        <field name="binding_type">report</field>
+    </record>
+
     <record id="supplier_report" model="ir.actions.report">
         <field name="name">Supplier Excel</field>
         <field name="model">farzanamart.supplier</field>
@@ -19,4 +30,7 @@
         <field name="binding_model_id" ref="model_farzanamart_barang"/>
         <field name="binding_type">report</field>
     </record>
+
+    
+
 </odoo>
