@@ -18,6 +18,27 @@ class Penjualan(models.Model):
         inverse_name='penjualan_id',
         string='Detail Penjualan')
 
+    state = fields.Selection(
+        string='Status',
+        selection=[('draft', 'Draft'),
+                   ('confirm', 'Confirm'),
+                   ('done', 'Done'),
+                   ('cancelled', 'Cancelled'),
+                   ],
+        required=True, readonly=True, default='draft')
+
+    def action_confirm(self):
+        self.write({'state': 'confirm'})
+
+    def action_done(self):
+        self.write({'state': 'done'})
+
+    def action_cancel(self):
+        self.write({'state': 'cancelled'})
+
+    def action_draft(self):
+        self.write({'state': 'draft'})
+
     @api.depends('detailpenjualan_ids')
     def _compute_totalbayar(self):
         for line in self:
@@ -26,22 +47,24 @@ class Penjualan(models.Model):
             line.total_bayar = result
 
     def unlink(self):
-        if self.detailpenjualan_ids:
-            penjualan = []
-            for line in self:
-                penjualan = self.env['farzanamart.detailpenjualan'].search(
-                    [('penjualan_id', '=', line.id)])
-                print(penjualan)
+        if self.filtered(lambda line: line.state != 'draft'):
+            raise ValidationError("Tdak dapat menghapus jika status BUKAN DRAFT")
+        else:
+            if self.detailpenjualan_ids:
+                penjualan = []
+                for line in self:
+                    penjualan = self.env['farzanamart.detailpenjualan'].search(
+                        [('penjualan_id', '=', line.id)])
+                    print(penjualan)
 
-            for ob in penjualan:
-                print(ob.barang_id.name + ' ' + str(ob.qty))
-                ob.barang_id.stok += ob.qty
-        return super(Penjualan, self).unlink()
+                for ob in penjualan:
+                    print(ob.barang_id.name + ' ' + str(ob.qty))
+                    ob.barang_id.stok += ob.qty
+            return super(Penjualan, self).unlink()
 
-    # _sql_constraints = [
-    #     ('No Nota unik', 'unique(name)','No Nota harus unik')
-    # ]
-
+    _sql_constraints = [
+        ('no_nota_unik', 'unique (name)', 'Nomor Nota tidak boleh sama !!!')
+    ]
     
 
 class DetailPenjualan(models.Model):

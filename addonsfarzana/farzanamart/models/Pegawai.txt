@@ -1,0 +1,4 @@
+1. Pegawai 
+2. Absensi
+3. Izin cuti
+4. Gaji
