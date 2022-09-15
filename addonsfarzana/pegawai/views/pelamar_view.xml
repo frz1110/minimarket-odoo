@@ -29,7 +29,10 @@
                </header>
             </xpath>
             <xpath expr="//form//sheet//group[2]" position="after">
-                <field name="cv" />
+                <group string="Berkas">
+                    <field name="cv" filename='cv_name'/>
+                    <field name="cv_name" invisible='1'/>
+                </group>
             </xpath>  
              <xpath expr="//field[@name='name']" position="after">
                 <field name="id_pelamar" />

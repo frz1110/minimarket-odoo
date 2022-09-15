@@ -12,6 +12,7 @@
                 <field name="tgl_izin_mulai"  />
                 <field name="tgl_izin_akhir" />
                 <field name="hari_izin"/>
+                <field name="state"/>
             </tree>
         </field>
     </record>
@@ -24,12 +25,19 @@
         <field name="model">pegawai.izin</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm" class="btn btn-primary" states="draft"/>
+                    <button name="action_approved" type="object" string="Approved" class="btn btn-primary" states="confirm"/>
+                    <button name="action_cancel" type="object" string="Cancel" class="btn btn-warning" states="confirm" confirm="Anda yakin meng-cancel Quotation ini?"/>
+                    <button name="action_draft" type="object" string="Kembali ke Draft" class="btn btn-danger" states="cancelled" confirm="Anda yakin untuk mengedit Quotation ini?"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm,approved"/>
+                </header>
             <sheet>
                 <group>
-               <field name="pegawai_id" />
-                <field name="tgl_izin_mulai"  />
-                <field name="tgl_izin_akhir" />
-                <field name="alasan" />
+               <field name="pegawai_id"  attrs="{'readonly' : [('state', '!=', 'draft')]}"/>
+                <field name="tgl_izin_mulai" attrs="{'readonly' : [('state', '!=', 'draft')]}" />
+                <field name="tgl_izin_akhir" attrs="{'readonly' : [('state', '!=', 'draft')]}"/>
+                <field name="alasan" attrs="{'readonly' : [('state', '!=', 'draft')]}"/>
                 </group>
             </sheet>
             </form>

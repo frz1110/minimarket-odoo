@@ -16,13 +16,9 @@ class Role(models.Model):
 
     @api.depends('pegawai_intern')
     def _compute_pegawai(self):
-        print('haloo',self)
         for record in self:
-            print('Halooo',record.name)
-            record.pegawai_intern = len(self.env['pegawai.pegawai'].search([('status','=','Internship')]))
-            record.pegawai_part = len(self.env['pegawai.pegawai'].search([('status','=','Part Time')]))
-            record.pegawai_full = len(self.env['pegawai.pegawai'].search([('status','=','Full Time')]))
+            record.pegawai_intern = self.env['pegawai.pegawai'].search_count([('status','=','Internship'),('role','=',record.name)])
+            record.pegawai_part = self.env['pegawai.pegawai'].search_count([('status','=','Part Time'),('role','=',record.name)])
+            record.pegawai_full = self.env['pegawai.pegawai'].search_count([('status','=','Full Time'),('role','=',record.name)])
             record.pegawai_total = record.pegawai_intern + record.pegawai_part + record.pegawai_full
 
-    def act_button(self):
-        pass

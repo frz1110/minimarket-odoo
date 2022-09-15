@@ -56,10 +56,16 @@ class Pelamar(models.Model):
     _description = 'Calon Pegawai Perusahaan'
 
     id_pelamar = fields.Integer(string="ID Pelamar")
-    cv = fields.Binary(string='CV')
+    cv = fields.Binary(string='CV', attachment=True)
+    cv_name = fields.Char(String='File Name1')
     pesan_ids = fields.One2many(comodel_name='pegawai.pesan_pelamar', inverse_name="pelamar_id", string="Pesan untuk HR")
     
     _sql_constraints = [
         ('id_pelamar_unik', 'unique (id_pelamar)', 'ID Pelamar tidak boleh sama !!!')
     ]
+
+    @api.constrains('cv')
+    def _check_file(self):
+       if str(self.cv_name.split(".")[1]) != 'pdf' :
+            raise ValidationError("File yang diupload haruslah pdf")
     

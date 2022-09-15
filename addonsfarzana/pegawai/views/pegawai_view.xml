@@ -30,12 +30,14 @@
                </header>
             </xpath>
             <xpath expr="//field[@name='name']" position="before">
-                <field name="foto" widget='image'/>
+              
+                    <field name="foto" widget='image'/>
+               
             </xpath>  
              <xpath expr="//field[@name='name']" position="after">
                 <field name="id_pegawai" />
             </xpath> 
-             <xpath expr="//form//sheet//group[2]" position="after">
+             <xpath expr="//form//sheet//group[1]" position="after">
                 <group string="Catatan Kehadiran">
                     <field name="absensi_ids" readonly="1">
                         <tree>

@@ -25,7 +25,8 @@
             <form>
             
             <sheet>
-                <group>
+            <group>
+                <group string="Informasi Pegawai">
                     <field name="name" />
                     <field name="role" />
                      <field name="status"/>
@@ -36,6 +37,7 @@
                     <field name="alamat"/>
                     <field name="tgl_lahir"/>
                 </group>
+            </group>
             </sheet>
             </form>
         </field>

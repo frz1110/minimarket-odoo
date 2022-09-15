@@ -5,11 +5,31 @@ class Izin(models.Model):
     _name = 'pegawai.izin'
     _description = 'Pengajuan Izin'
 
+    state = fields.Selection(
+        string='Status',
+        selection=[('draft', 'Draft'),
+                   ('confirm', 'Confirm'),
+                   ('approved', 'Approved'),
+                   ('cancelled', 'Cancelled'),
+                   ],
+        required=True, readonly=True, default='draft')
     pegawai_id = fields.Many2one(comodel_name='pegawai.pegawai',string="Nama Pegawai", ondelete='cascade')
-    tgl_izin_mulai = fields.Date(string='Tanggal Mulai Izin')
+    tgl_izin_mulai = fields.Date(string='Tanggal Mulai Izin', readonly=(state != 'draft'))
     tgl_izin_akhir = fields.Date(string='Tanggal Berakhir Izin')
     alasan = fields.Text(string='Alasan Tidak Masuk')
     hari_izin = fields.Integer(string='Jumlah Hari Izin')
+
+    def action_confirm(self):
+        self.write({'state': 'confirm'})
+
+    def action_approved(self):
+        self.write({'state': 'approved'})
+
+    def action_cancel(self):
+        self.write({'state': 'cancelled'})
+
+    def action_draft(self):
+        self.write({'state': 'draft'})
 
     @api.model
     def create(self, vals):
@@ -27,7 +47,10 @@ class Izin(models.Model):
         super(Izin, self).write({'hari_izin':count})
 
     def unlink(self):
-        self.env['pegawai.pegawai'].search([('id','=',self.pegawai_id.id)]).write({'jatah_cuti':self.pegawai_id.jatah_cuti+self.hari_izin})
+        if self.filtered(lambda line: line.state != 'draft'):
+            raise ValidationError("Tdak dapat menghapus jika status BUKAN DRAFT")
+        else:
+            self.env['pegawai.pegawai'].search([('id','=',self.pegawai_id.id)]).write({'jatah_cuti':self.pegawai_id.jatah_cuti+self.hari_izin})
         return super(Izin, self).unlink()
 
     @api.constrains('tgl_izin_mulai', 'tgl_izin_akhir')

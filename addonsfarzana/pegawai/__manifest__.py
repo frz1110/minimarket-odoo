@@ -35,7 +35,6 @@
         'views/izin_view.xml',
         'views/role_view.xml',
         'wizzard/pesan_wizzard_view.xml',
-        'wizzard/jumlah_pegawai_wizzard_view.xml',
         'report/report.xml',
         'report/print_detail_pegawai.xml',   
     ],
