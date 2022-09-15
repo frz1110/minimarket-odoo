@@ -14,6 +14,10 @@ class Role(models.Model):
     pegawai_part = fields.Integer(compute='_compute_pegawai', string='Jumlah Pegawai Part Time')
     pegawai_full = fields.Integer(compute='_compute_pegawai', string='Jumlah Pegawai Full Time')
 
+    _sql_constraints = [
+        ('role_pekerjaan_unik', 'unique (name)', 'Nama Pekerjaan tidak boleh sama !!!')
+    ]
+
     @api.depends('pegawai_intern')
     def _compute_pegawai(self):
         for record in self:

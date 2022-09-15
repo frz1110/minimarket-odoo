@@ -9,8 +9,8 @@
         <field name="inherit_id" ref="pegawai_person_view_tree"/>
         <field name="arch" type="xml">
             <!-- Add your xpath here -->
-            <xpath expr="//field[@name='name']" position="after">
-                <field name="id_pegawai" />
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="id" />
             </xpath>  
         </field>
     </record>
@@ -34,8 +34,8 @@
                     <field name="foto" widget='image'/>
                
             </xpath>  
-             <xpath expr="//field[@name='name']" position="after">
-                <field name="id_pegawai" />
+             <xpath expr="//field[@name='name']" position="before">
+                <field name="id" />
             </xpath> 
              <xpath expr="//form//sheet//group[1]" position="after">
                 <group string="Catatan Kehadiran">

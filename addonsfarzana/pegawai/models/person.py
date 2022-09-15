@@ -39,31 +39,22 @@ class Pegawai(models.Model):
     _inherit = 'pegawai.person'
     _description = 'Pegawai Perusahaan'
 
-    id_pegawai = fields.Integer(string="ID Pegawai")
     foto = fields.Image(string="Foto")
     jatah_cuti = fields.Integer(string="Jatah Cuti (hari)", default=10)
     absensi_ids = fields.One2many(comodel_name='pegawai.absen', inverse_name="pegawai_id", string="Absensi")
     izin_ids = fields.One2many(comodel_name='pegawai.izin', inverse_name="pegawai_id", string="Izin Pegawai")
     pesan_ids = fields.One2many(comodel_name='pegawai.pesan_pegawai', inverse_name="pegawai_id", string="Pesan untuk HR")
     
-    _sql_constraints = [
-        ('id_pegawai_unik', 'unique (id_pegawai)', 'ID Pegawai tidak boleh sama !!!')
-    ]
 
 class Pelamar(models.Model):
     _name = 'pegawai.pelamar'
     _inherit = 'pegawai.person'
     _description = 'Calon Pegawai Perusahaan'
 
-    id_pelamar = fields.Integer(string="ID Pelamar")
     cv = fields.Binary(string='CV', attachment=True)
     cv_name = fields.Char(String='File Name1')
     pesan_ids = fields.One2many(comodel_name='pegawai.pesan_pelamar', inverse_name="pelamar_id", string="Pesan untuk HR")
     
-    _sql_constraints = [
-        ('id_pelamar_unik', 'unique (id_pelamar)', 'ID Pelamar tidak boleh sama !!!')
-    ]
-
     @api.constrains('cv')
     def _check_file(self):
        if str(self.cv_name.split(".")[1]) != 'pdf' :
