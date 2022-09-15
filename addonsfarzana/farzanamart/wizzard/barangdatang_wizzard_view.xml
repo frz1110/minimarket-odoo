@@ -13,7 +13,7 @@
                 </group>
                 <footer>
                 <button name="button_barang_datang" type="object" string="Input Barang"/>
-                <button  string="Cancel" special='cancel'/>
+                <button  string="Cancel" special='cancel' class="btn btn-info" />
                 </footer>
             </sheet>
         </form>

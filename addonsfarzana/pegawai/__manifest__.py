@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'report_xlsx'],
 
     # always loaded
     'data': [
@@ -28,8 +28,15 @@
         'views/views.xml',
         'views/templates.xml',
         'views/menu.xml',
-        'views/pegawai.xml',
-        'views/absen.xml',
+        'views/person_view.xml',
+        'views/pegawai_view.xml',
+        'views/pelamar_view.xml',
+        'views/absen_view.xml',
+        'views/izin_view.xml',
+        'views/role_view.xml',
+        'wizzard/pesan_wizzard_view.xml',
+        'report/report.xml',
+        'report/print_detail_pegawai.xml',   
     ],
     # only loaded in demonstration mode
     'demo': [
