@@ -18,14 +18,10 @@ class Absensi(models.Model):
 
     @api.constrains('jam_masuk', 'jam_keluar')
     def check_tanggal(self):
-        for rec in self:
-            if self.jam_masuk > self.jam_keluar:
-                raise ValidationError("Jam Pulang haruslah setelah Jam Mulai ")
+        if self.jam_masuk > self.jam_keluar:
+            raise ValidationError("Jam Pulang haruslah setelah Jam Mulai ")
 
-class Lembur(models.Model):
-    _name = 'pegawai.lembur'
-    _inherit = 'pegawai.absen'
-    _description = 'New Description'
+
 
 
 

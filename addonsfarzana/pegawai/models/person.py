@@ -25,14 +25,12 @@ class Person(models.Model):
     @api.constrains('no_hp', 'no_ktp')
     def check_numeric(self):
         for rec in self:
-            try:
-                if not rec.no_hp.isdigit():
-                    raise ValidationError("No HP tidak valid (harus berupa angka)")
+            if type(rec.no_hp) == bool or not rec.no_hp.isdigit():
+                raise ValidationError("No HP tidak valid (harus berupa angka)")
 
-                if not rec.no_ktp.isdigit():
-                    raise ValidationError("No KTP tidak valid (harus berupa angka)")
-            except:
-                pass
+            if type(rec.no_ktp) == bool or not rec.no_ktp.isdigit():
+                raise ValidationError("No KTP tidak valid (harus berupa angka)")
+            
 
 class Pegawai(models.Model):
     _name = 'pegawai.pegawai'
@@ -45,13 +43,18 @@ class Pegawai(models.Model):
     izin_ids = fields.One2many(comodel_name='pegawai.izin', inverse_name="pegawai_id", string="Izin Pegawai")
     pesan_ids = fields.One2many(comodel_name='pegawai.pesan_pegawai', inverse_name="pegawai_id", string="Pesan untuk HR")
     
+    @api.constrains('jatah_cuti')
+    def check_tanggal(self):
+        print(self.jatah_cuti)
+        if self.jatah_cuti < 0:
+            raise ValidationError("Jatah Cuti Tidak Mencukupi")
 
 class Pelamar(models.Model):
     _name = 'pegawai.pelamar'
     _inherit = 'pegawai.person'
     _description = 'Calon Pegawai Perusahaan'
 
-    cv = fields.Binary(string='CV', attachment=True)
+    cv = fields.Binary(string='CV', attachment=True, required=True)
     cv_name = fields.Char(String='File Name1')
     pesan_ids = fields.One2many(comodel_name='pegawai.pesan_pelamar', inverse_name="pelamar_id", string="Pesan untuk HR")
     
@@ -59,4 +62,16 @@ class Pelamar(models.Model):
     def _check_file(self):
        if str(self.cv_name.split(".")[1]) != 'pdf' :
             raise ValidationError("File yang diupload haruslah pdf")
+
+    def action_terima(self):
+        self.env['pegawai.pegawai'].create({
+            'name':self.name,
+            'no_ktp':self.no_ktp,
+            'status':self.status,
+            'alamat':self.alamat,
+            'no_hp':self.no_hp,
+            'tgl_lahir':self.tgl_lahir,
+            'role':self.role.id,
+        })
+        super(Pelamar,self).unlink()
     

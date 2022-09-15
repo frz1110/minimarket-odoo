@@ -10,6 +10,8 @@
         <field name="arch" type="xml">
             <!-- Add your xpath here -->
             <xpath expr="//field[@name='name']" position="before">
+                <button name="action_terima" type="object" string="Terima Lamaran" class='btn btn-info'/>
+                <button name="unlink" type="object" string="Tolak Lamaran" class='btn btn-danger'/>
                 <field name="id" />
             </xpath>  
         </field>
